@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sesi-6</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="container">
+      <nav>
+        <a onclick="reRender()" id="home">HOME</a>
+        <a onclick="toggleDarkMode()" id="mode">MODE-DARK</a>
+        <a onclick="toggleRedMode()" id="red">MODE-RED</a>
+        <a onclick="toggleBlueMode()" id="blue">MODE-BLUE</a>
+        <a onclick="toggleGreenMode()" id="green">MODE-GREEN</a>
+      </nav>
+      <h1>SESI 6</h1>
+      <p class="info" id="info"></p>
+    </div>
+
+    <!-- initializing function script -->
+    <script>
+      let body = document.body;
+      let info = document.getElementById("info");
+      let mode = document.getElementById("mode");
+      let red = document.getElementById("red");
+      let blue = document.getElementById("blue");
+      let green = document.getElementById("green");
+      let home = document.getElementById("home");
+
+      const limit = 5;
+      let totalClicks = 0;
+
+      function updateInfo(totalClicks, limit) {
+        return `Mode digunakan ${totalClicks}x, tersisa ${limit - totalClicks}`;
+      }
+
+      function disableAllModes() {
+        mode.style.display = "none";
+        red.style.display = "none";
+        blue.style.display = "none";
+        green.style.display = "none";
+        home.textContent = "RESTART";
+        info.textContent = "SEMUA MODE HABIS, SILAHKAN RESTART";
+      }
+
+      function handleModeClick() {
+        totalClicks++;
+        info.textContent = updateInfo(totalClicks, limit);
+
+        if (totalClicks >= limit) {
+          disableAllModes();
+        }
+      }
+
+      function toggleDarkMode() {
+        handleModeClick();
+
+        body.classList.remove("red", "blue", "green");
+        body.classList.toggle("dark");
+
+        if (body.classList.contains("dark")) {
+          mode.textContent = "MODE-LIGHT";
+        } else {
+          mode.textContent = "MODE-DARK";
+        }
+      }
+
+      function toggleRedMode() {
+        handleModeClick();
+
+        body.classList.remove("dark", "blue", "green");
+        body.classList.add("red");
+        mode.textContent = "MODE-DARK";
+      }
+
+      function toggleBlueMode() {
+        handleModeClick();
+
+        body.classList.remove("dark", "red", "green");
+        body.classList.add("blue");
+        mode.textContent = "MODE-DARK";
+      }
+
+      function toggleGreenMode() {
+        handleModeClick();
+
+        body.classList.remove("dark", "red", "blue");
+        body.classList.add("green");
+        mode.textContent = "MODE-DARK";
+      }
+
+      function reRender() {
+        location.reload();
+      }
+    </script>
+  </body>
+</html>
